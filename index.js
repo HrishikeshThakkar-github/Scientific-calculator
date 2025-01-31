@@ -11,7 +11,7 @@ const OPERATORS = ["+", "-", "*", "/"];
 const POWER = "POWER(", FACTORIAL = "FACTORIAL";
 
 
-
+//this is to store what the user does
 let data = {
     operation: [],
     formula: []
@@ -257,19 +257,77 @@ function createCalculatorButtons() {
 
 createCalculatorButtons();
 
+input_element.addEventListener("click", event =>{
+    const target_btn=event.target;
 
-//click sound
-{
-    const audio = new Audio("https://www.fesliyanstudios.com/play-mp3/387");
-    const buttons = document.querySelectorAll("button");
-    
-    buttons.forEach(button => {
-      button.addEventListener("click", () => {
-        audio.play();
-      });
+    calculator_buttons.forEach(button => {
+
+        if(button.name == target_btn.id){ calculator(button)}
     });
-    
+
+})
+
+
+function calculator(button) {
+    if (button.type == "operator") {
+        data.operation.push(button.symbol);
+        data.formula.push(button.formula);
+    }else if (button.type == "number") {
+        data.operation.push(button.symbol);
+        data.formula.push(button.formula);
+    }else if (button.type == "trigo_function") {
+        
+    }else if (button.type == "math_function") {
+        
+    }else if (button.type == "key") {
+        if(button.name=="clear"){
+            data.operation=[];
+            data.formula=[];
+
+            updateOutputResult(0);
+        }
+        else if(button.name=="delete"){
+            data.operation.pop()
+            data.formula.pop()
+        }
+        
+    }else if (button.type == "calculate") {
+        let formula_str = data.formula.join('');
+        let result;
+
+        try {
+            result = eval(formula_str);
+        } catch (error) {
+            result = "Error";
+        }
+
+        updateOutputResult(result);
+    }
+
+    updateOutputOperation(data.operation.join(""));
 }
+
+// Function to update operation display
+function updateOutputOperation(operation) {
+    output_operation_element.innerHTML = operation;
+}
+
+// Function to update result display
+function updateOutputResult(result) {
+    output_result_element.innerHTML = result;
+}
+//click sound
+// {
+//     const audio = new Audio("https://www.fesliyanstudios.com/play-mp3/387");
+//     const buttons = document.querySelectorAll("button");
+    
+//     buttons.forEach(button => {
+//       button.addEventListener("click", () => {
+//         audio.play();
+//       });
+//     });
+    
+// }
 
 
 function gamma(n) {  // accurate to about 15 decimal places
