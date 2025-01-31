@@ -317,17 +317,17 @@ function updateOutputResult(result) {
     output_result_element.innerHTML = result;
 }
 //click sound
-// {
-//     const audio = new Audio("https://www.fesliyanstudios.com/play-mp3/387");
-//     const buttons = document.querySelectorAll("button");
+{
+    const audio = new Audio("https://www.fesliyanstudios.com/play-mp3/387");
+    const buttons = document.querySelectorAll("button");
     
-//     buttons.forEach(button => {
-//       button.addEventListener("click", () => {
-//         audio.play();
-//       });
-//     });
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        audio.play();
+      });
+    });
     
-// }
+}
 
 
 function gamma(n) {  // accurate to about 15 decimal places
