@@ -1,8 +1,5 @@
 // Scientific Calculator Functionality
 
-
-
-
 class Calculator {
     constructor(displayElement) {
         this.displayElement = displayElement;
@@ -74,11 +71,17 @@ class Calculator {
     }
 
     memoryAdd() {
-        this.memory += parseFloat(this.displayValue) || 0;
+        this.dispvalue= parseFloat(this.displayValue);
+        this.dispvalue += parseFloat(this.memory);
+        this.displayValue = this.dispvalue.toString();
+        this.updateDisplay();
     }
 
     memorySubtract() {
-        this.memory -= parseFloat(this.displayValue) || 0;
+        this.dispvalue= parseFloat(this.displayValue);
+        this.dispvalue = parseFloat(this.memory);
+        this.displayValue = this.dispvalue.toString();
+        this.updateDisplay();
     }
 }
 
@@ -124,6 +127,8 @@ document.querySelectorAll('.calDiv__btn').forEach(button => {
             case 'm-minus': calculator.memorySubtract(); break;
             case 'm-store': calculator.memoryStore(); break;
             case 'unit-of-angle': calculator.toggleAngleMode(); break;
+            case 'second-fn': calculator.toggleSecondFunction(); break;
+            case '10sq': calculator.powerOfTen(); break;
             case '*': calculator.append('\u00D7'); break;
             case '/': calculator.append('\u00F7'); break;
             default: calculator.append(button.textContent);
