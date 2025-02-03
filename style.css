@@ -1,142 +1,117 @@
-*{
+* {
     padding: 0;
     margin: 0;
-    background-origin: padding-box;
-    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
 }
 
-html{
-    font-size: 16px;
-    background-color: #636363;
-}
-
-.calculator{
-    position: absolute;
-
-    top: 50%;
-    left: 50%;
-
-    transform: translate(-50%, -50%);
-}
-
-.calc-container{
-    background-color: #1d1d1d;
-
-    width: 600px;
-    height: auto;
-
-    border-radius: 0 0 30px 30px;
-}
-
-.output{
-    width: 100%;;
-}   
-
-.operation{
-    width: 600px;
-    height: 70px;
-
-    color: #878787;
-
-    font-size: 1.9em;
-    font-weight: bold;
-
-    position: relative;
-    overflow: hidden;
-}
-.operation .value{
-    position: absolute;
-
-    bottom: 5px;
-    right : 10px;
-    
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.result{
-    width: 600px;
-    height: 140px;
-
-    color: #FFF;
-
-    font-size: 2.6em;
-    font-weight: bold;
-    
-    overflow: hidden;
-    position: relative;
-}
-
-.result .value{
-    position: absolute;
-
-    top: 50%;
-    transform: translateY(-50%);
-    right : 10px;
-    
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-
-.input{
-    background-color: #FFF;
-
-    border-radius: 0 0 25px 25px;
-    border: 1px solid #1d1d1d;
-    height: 340px;
-}
-
-.row {
+body{
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: center;
+    
 }
+ main{
+    max-width: 375px;
+    margin-top: 3rem;
 
-.row button{
-    width: 50px;
-    height: 50px;
-
-    font-size: 1.5em;
-
-    border: none;
-    border-radius: 50%;
-    background-color: transparent;
-
-    margin : 8px;
-
-    cursor: pointer;
+ }
+.container {
+    border: 5px solid black;
     
 }
 
-.row button:hover{
-    background-color: black;
-    color: white;
-    font-weight: bold;
+.calDiv {
+    width: 23rem;
+    padding: 0.6rem;
+    max-height: 100%;
+    box-shadow: 0rem 0rem 0.25rem 0.0625rem grey;
+    
 }
 
-.row #calculate{
-    color: #FFF;
-    background-color: #46e0bc;
-    width : 121px;
-    border-radius: 50px;
-}
-.row #delete{
-    color: #FFF;
-    background-color: #e05046;
-}
-
-#division, #multiplication, #subtraction, #addition {
-    color: #18b893;
+.calDiv__btn {
+    background-color: white;
+    height: 2.5rem;
+    color: black;
+    width: 4.3rem;
+    margin: 0rem 0.1rem;
+    white-space: nowrap;
+    border-radius: 0;
+    border: 4px solid black;
 }
 
-.input button span{
-    font-size: 0.6em;
+:where(.calDiv__btn:hover, .calDiv__dropdownBtn--shadow):hover {
+    background-color: rgba(131, 131, 131, 0.35);
+    transition: 0.5s ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.35) 0rem 0.31rem 0.5rem;
+    border-radius: 0;
+}
+
+/* .inputtext{
+    width: 500px;
+} */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
     position: absolute;
-}
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    top: 1.8px;
+    background-color: rgb(0, 0, 0);
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #ffffff;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #000000;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
 
-.active-angle{
-    background-color: #1d1d1d !important;
-    color: #FFF !important;
-    border-radius: 10px !important;
-}
+
+  .header{
+    display: flex;
+    padding: 0.5rem;
+    justify-content: space-between;
+  }

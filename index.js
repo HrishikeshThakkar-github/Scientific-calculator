@@ -1,357 +1,132 @@
-
-
-//select elements
-const input_element = document.querySelector('.input');
-const output_operation_element = document.querySelector('.operation .value');
-const output_result_element = document.querySelector('.result .value');
-
-
-//somevariables
-const OPERATORS = ["+", "-", "*", "/"];
-const POWER = "POWER(", FACTORIAL = "FACTORIAL";
-
-
-//this is to store what the user does
-let data = {
-    operation: [],
-    formula: []
-}
+// Scientific Calculator Functionality
 
 
 
-let calculator_buttons = [
-    {
-        name: "rad",
-        symbol: "Rad",
-        formula: false,
-        type: "key"
-    },
-    {
-        name: "deg",
-        symbol: "Deg",
-        formula: false,
-        type: "key"
-    },
-    {
-        name: "square-root",
-        symbol: "√",
-        formula: "Math.sqrt",
-        type: "math_function"
-    },
-    {
-        name: "square",
-        symbol: "x²",
-        formula: POWER,
-        type: "math_function"
-    },
-    {
-        name: "open-parenthesis",
-        symbol: "(",
-        formula: "(",
-        type: "number"
-    },
-    {
-        name: "close-parenthesis",
-        symbol: ")",
-        formula: ")",
-        type: "number"
-    },
-    {
-        name: "clear",
-        symbol: "C",
-        formula: false,
-        type: "key"
-    },
-    {
-        name: "delete",
-        symbol: "⌫",
-        formula: false,
-        type: "key"
-    },
-    {
-        name: "pi",
-        symbol: "π",
-        formula: "Math.PI",
-        type: "number"
-    },
-    {
-        name: "cos",
-        symbol: "cos",
-        formula: "trigo(Math.cos,",
-        type: "trigo_function"
-    }, {
-        name: "sin",
-        symbol: "sin",
-        formula: "trigo(Math.sin,",
-        type: "trigo_function"
-    }, {
-        name: "tan",
-        symbol: "tan",
-        formula: "trigo(Math.tan,",
-        type: "trigo_function"
-    }, {
-        name: "7",
-        symbol: 7,
-        formula: 7,
-        type: "number"
-    }, {
-        name: "8",
-        symbol: 8,
-        formula: 8,
-        type: "number"
-    }, {
-        name: "9",
-        symbol: 9,
-        formula: 9,
-        type: "number"
-    },
-    {
-        name: "division",
-        symbol: "÷",
-        formula: "/",
-        type: "operator"
-    },
-    {
-        name: "e",
-        symbol: "e",
-        formula: "Math.E",
-        type: "number"
-    },
-    {
-        name: "acos",
-        symbol: "acos",
-        formula: "inv_trigo(Math.acos,",
-        type: "trigo_function"
-    }, {
-        name: "asin",
-        symbol: "asin",
-        formula: "inv_trigo(Math.asin,",
-        type: "trigo_function"
-    }, {
-        name: "atan",
-        symbol: "atan",
-        formula: "inv_trigo(Math.atan,",
-        type: "trigo_function"
-    },
-    {
-        name: "4",
-        symbol: 4,
-        formula: 4,
-        type: "number"
-    }, {
-        name: "5",
-        symbol: 5,
-        formula: 5,
-        type: "number"
-    }, {
-        name: "6",
-        symbol: 6,
-        formula: 6,
-        type: "number"
-    }, {
-        name: "multiplication",
-        symbol: "×",
-        formula: "*",
-        type: "operator"
-    }, {
-        name: "factorial",
-        symbol: "×!",
-        formula: FACTORIAL,
-        type: "math_function"
-    }, {
-        name: "exp",
-        symbol: "exp",
-        formula: "Math.exp",
-        type: "math_function"
-    }, {
-        name: "ln",
-        symbol: "ln",
-        formula: "Math.log",
-        type: "math_function"
-    }, {
-        name: "log",
-        symbol: "log",
-        formula: "Math.log10",
-        type: "math_function"
-    }, {
-        name: "1",
-        symbol: 1,
-        formula: 1,
-        type: "number"
-    }, {
-        name: "2",
-        symbol: 2,
-        formula: 2,
-        type: "number"
-    }, {
-        name: "3",
-        symbol: 3,
-        formula: 3,
-        type: "number"
-    }, {
-        name: "subtraction",
-        symbol: "–",
-        formula: "-",
-        type: "operator"
-    }, {
-        name: "power",
-        symbol: "x<span>y</span>",
-        formula: POWER,
-        type: "math_function"
-    }, {
-        name: "ANS",
-        symbol: "ANS",
-        formula: "ans",
-        type: "number"
-    }, {
-        name: "percent",
-        symbol: "%",
-        formula: "/100",
-        type: "number"
-    }, {
-        name: "comma",
-        symbol: ".",
-        formula: ".",
-        type: "number"
-    }, {
-        name: "0",
-        symbol: 0,
-        formula: 0,
-        type: "number"
-    }, {
-        name: "calculate",
-        symbol: "=",
-        formula: "=",
-        type: "calculate"
-    }, {
-        name: "addition",
-        symbol: "+",
-        formula: "+",
-        type: "operator"
+
+class Calculator {
+    constructor(displayElement) {
+        this.displayElement = displayElement;
+        this.displayValue = '';
+        this.memory = 0;
+        this.angleMode = 'DEG'; // Default to degrees
     }
-];
-//now each row has 8 buttons
 
-//creating buttons with the help of javascript
-function createCalculatorButtons() {
-    const btns_per_row = 8;
-    let added_btns = 0;
+    updateDisplay() {
+        this.displayElement.value = this.displayValue;
+    }
 
+    append(value) {
+        if (this.displayValue === 'Error') this.displayValue = '';
+        this.displayValue += value;
+        this.updateDisplay();
+    }
 
-    calculator_buttons.forEach(button => {
-        if (added_btns % btns_per_row == 0) {
-            input_element.innerHTML += `<div class="row"></div>`;
-        }
+    clear() {
+        this.displayValue = '';
+        this.updateDisplay();
+    }
 
+    deleteLast() {
+        this.displayValue = this.displayValue.slice(0, -1);
+        this.updateDisplay();
+    }
 
-        const rows = document.querySelectorAll(".row");
-        const row = rows[rows.length - 1]; // Select the last row dynamically
-
-        row.innerHTML += `<button id="${button.name}">${button.symbol}</button>`;
-
-
-        added_btns++;
-
-    })
-}
-
-createCalculatorButtons();
-
-input_element.addEventListener("click", event =>{
-    const target_btn=event.target;
-
-    calculator_buttons.forEach(button => {
-
-        if(button.name == target_btn.id){ calculator(button)}
-    });
-
-})
-
-
-function calculator(button) {
-    if (button.type == "operator") {
-        data.operation.push(button.symbol);
-        data.formula.push(button.formula);
-    }else if (button.type == "number") {
-        data.operation.push(button.symbol);
-        data.formula.push(button.formula);
-    }else if (button.type == "trigo_function") {
-        
-    }else if (button.type == "math_function") {
-        
-    }else if (button.type == "key") {
-        if(button.name=="clear"){
-            data.operation=[];
-            data.formula=[];
-
-            updateOutputResult(0);
-        }
-        else if(button.name=="delete"){
-            data.operation.pop()
-            data.formula.pop()
-        }
-        
-    }else if (button.type == "calculate") {
-        let formula_str = data.formula.join('');
-        let result;
-
+    calculate() {
         try {
-            result = eval(formula_str);
-        } catch (error) {
-            result = "Error";
+            this.displayValue = eval(this.displayValue.replace(/\u00D7/g, '*').replace(/\u00F7/g, '/')).toString();
+            this.updateDisplay();
+        } catch {
+            this.displayValue = 'Error';
+            this.updateDisplay();
         }
-
-        updateOutputResult(result);
     }
 
-    updateOutputOperation(data.operation.join(""));
+    trigonometric(fn) {
+        let value = parseFloat(this.displayValue);
+        if (isNaN(value)) return;
+        if (this.angleMode === 'DEG') {
+            value = value * (Math.PI / 180);
+        }
+        this.displayValue = Math[fn](value).toString();
+        this.updateDisplay();
+    }
+
+    factorial(n) {
+        if (n < 0) return 'Error';
+        return n === 0 ? 1 : n * this.factorial(n - 1);
+    }
+
+    toggleAngleMode() {
+        this.angleMode = this.angleMode === 'DEG' ? 'RAD' : 'DEG';
+    }
+
+    memoryStore() {
+        this.memory = parseFloat(this.displayValue) || 0;
+    }
+
+    memoryRecall() {
+        this.displayValue = this.memory.toString();
+        this.updateDisplay();
+    }
+
+    memoryClear() {
+        this.memory = 0;
+    }
+
+    memoryAdd() {
+        this.memory += parseFloat(this.displayValue) || 0;
+    }
+
+    memorySubtract() {
+        this.memory -= parseFloat(this.displayValue) || 0;
+    }
 }
 
-// Function to update operation display
-function updateOutputOperation(operation) {
-    output_operation_element.innerHTML = operation;
-}
+const display = document.querySelector('input');
+const calculator = new Calculator(display);
 
-// Function to update result display
-function updateOutputResult(result) {
-    output_result_element.innerHTML = result;
-}
-//click sound
-{
-    const audio = new Audio("https://www.fesliyanstudios.com/play-mp3/387");
-    const buttons = document.querySelectorAll("button");
-    
-    buttons.forEach(button => {
-      button.addEventListener("click", () => {
-        audio.play();
-      });
+document.querySelectorAll('.calDiv__btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const id = button.id;
+        switch (id) {
+            case '=': calculator.calculate(); break;
+            case 'reset-char': calculator.clear(); break;
+            case 'remove-char': calculator.deleteLast(); break;
+            case 'sin()': calculator.trigonometric('sin'); break;
+            case 'cos()': calculator.trigonometric('cos'); break;
+            case 'tan()': calculator.trigonometric('tan'); break;
+            case '!': 
+                calculator.displayValue = calculator.factorial(parseInt(calculator.displayValue)).toString(); 
+                calculator.updateDisplay(); 
+                break;
+            case 'π': calculator.append(Math.PI.toString()); break;
+            case 'e': calculator.append(Math.E.toString()); break;
+            case 'sqrt': 
+                calculator.displayValue = Math.sqrt(parseFloat(calculator.displayValue)).toString(); 
+                calculator.updateDisplay(); 
+                break;
+            case 'log1': 
+                calculator.displayValue = Math.log10(parseFloat(calculator.displayValue)).toString(); 
+                calculator.updateDisplay(); 
+                break;
+            case 'ln': 
+                calculator.displayValue = Math.log(parseFloat(calculator.displayValue)).toString(); 
+                calculator.updateDisplay(); 
+                break;
+            case '**': calculator.append('**'); break;
+            case 'modulo': 
+                calculator.displayValue = Math.abs(parseFloat(calculator.displayValue)).toString(); 
+                calculator.updateDisplay(); 
+                break;
+            case 'm-clear': calculator.memoryClear(); break;
+            case 'm-recall': calculator.memoryRecall(); break;
+            case 'm-plus': calculator.memoryAdd(); break;
+            case 'm-minus': calculator.memorySubtract(); break;
+            case 'm-store': calculator.memoryStore(); break;
+            case 'unit-of-angle': calculator.toggleAngleMode(); break;
+            case '*': calculator.append('\u00D7'); break;
+            case '/': calculator.append('\u00F7'); break;
+            default: calculator.append(button.textContent);
+        }
     });
-    
-}
-
-
-function gamma(n) {  // accurate to about 15 decimal places
-    //some magic constants 
-    var g = 7, // g represents the precision desired, p is the values of p[i] to plug into Lanczos' formula
-        p = [0.99999999999980993, 676.5203681218851, -1259.1392167224028, 771.32342877765313, -176.61502916214059, 12.507343278686905, -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7];
-    if (n < 0.5) {
-        return Math.PI / Math.sin(n * Math.PI) / gamma(1 - n);
-    }
-    else {
-        n--;
-        var x = p[0];
-        for (var i = 1; i < g + 2; i++) {
-            x += p[i] / (n + i);
-        }
-        var t = n + g + 0.5;
-        return Math.sqrt(2 * Math.PI) * Math.pow(t, (n + 0.5)) * Math.exp(-t) * x;
-    }
-}
-
-
-
-
-
-
-
-
+});
